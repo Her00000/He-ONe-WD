@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr 21 16:49:52 2022
+
+@author: her
+"""
+
+import mesa_reader as mr
+import matplotlib.pyplot as plt
+import numpy as np
+
+l = mr.MesaLogDir('../LOGS')
+p_1 = l.profile_data(profile_number=68)
+mass_1 = p_1.mass
+p = np.empty([428,1])
+mass_all ={}
+eps_nuc_all = {}
+for num in range(1,428):
+    p = l.profile_data(profile_number=num)
+    mass = p.mass
+    eps_nuc = p.eps_nuc
+    mass_all[num] = mass
+    eps_nuc_all[num] = eps_nuc
+for i in range(1,428):
+    plt.xlim(1.2,1.4)
+    #plt.ylim(0,1e14)
+    plt.plot(mass_all[i],eps_nuc_all[i])
+    plt.savefig("../nuc")
+    #plt.savefig("../nuc/nuc{}.png".format(i))
+    #plt.clf()#更新画布
